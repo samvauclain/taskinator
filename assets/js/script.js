@@ -125,11 +125,29 @@ var saveTasks = function() {
 // Converts tasks from the string format back into an array of objects.
 // Iterates through a tasks array and creates task elements on the page from it.
 var loadTasks = function() {
-  tasks = localStorage.getItem("tasks", JSON.stringify(tasks));
+  
   console.log("load:", tasks);
-};
+  tasks = localStorage.getItem("tasks", JSON.stringify(tasks));
 
-loadTasks();
+  if (tasks === null) { 
+    tasks = [];
+    return false;
+  }
+
+  tasks = JSON.parse(tasks);
+  console.log(tasks);
+  // var listItemEL = '';
+
+  for (var i = 0; i < tasks.length; i++) {
+    console.log(tasks[i]);
+    tasks[i].id = taskIdCounter;
+    listItemEL = document.createElement("li");
+    listItemEL.className = "task-item";
+    listItemEL.setAttribute("data-task-id", tasks[i].id);
+  }
+
+  console.log(listItemEl)
+};
 
 formEl.addEventListener("submit", taskFormHandler);
 
@@ -241,3 +259,5 @@ var deleteTask = function(taskId) {
 
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
