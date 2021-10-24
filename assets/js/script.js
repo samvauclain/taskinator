@@ -136,17 +136,23 @@ var loadTasks = function() {
 
   tasks = JSON.parse(tasks);
   console.log(tasks);
-  // var listItemEL = '';
+  // var listItemEl = '';
 
   for (var i = 0; i < tasks.length; i++) {
     console.log(tasks[i]);
     tasks[i].id = taskIdCounter;
-    listItemEL = document.createElement("li");
-    listItemEL.className = "task-item";
-    listItemEL.setAttribute("data-task-id", tasks[i].id);
+    listItemEl = document.createElement("li");
+    listItemEl.className = "task-item";
+    listItemEl.setAttribute("data-task-id", tasks[i].id);
+    taskInfoEl = document.createElement("div");
+    taskInfoEl.className = "task-info";
+    taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+    listItemEl.appendChild(taskInfoEl);
+    taskActionsEl = createTaskActions(tasks[i].id);
+    listItemEl.appendChild(taskActionsEl);
+    console.log(listItemEl);
   }
 
-  console.log(listItemEl)
 };
 
 formEl.addEventListener("submit", taskFormHandler);
